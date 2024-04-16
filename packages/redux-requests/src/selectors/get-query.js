@@ -1,4 +1,4 @@
-import { createSelectorCreator, defaultMemoize } from 'reselect';
+import { createSelectorCreator, lruMemoize } from 'reselect';
 
 import { denormalize, getDependentKeys } from '../normalizers';
 
@@ -54,10 +54,7 @@ const isQueryEqual = (currentVal, previousVal) => {
   return true;
 };
 
-const createCustomSelector = createSelectorCreator(
-  defaultMemoize,
-  isQueryEqual,
-);
+const createCustomSelector = createSelectorCreator(lruMemoize, isQueryEqual);
 
 const getData = (data, multiple, defaultData) => {
   if (data !== null) {
